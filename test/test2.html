@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
+        integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    <style>
+        #shakingbox{
+            /* border: 1px solid white; */
+            /* background-color: rgba(255,255,255,0.8); */
+            border-radius: 15px;
+        }
+        .Rbox{
+            animation: identifier 0.8s linear infinite;
+            cursor: pointer;
+        }
+        
+        .locationBox{
+            display: none;
+            width: 0px;
+            height: 0px;
+        }
+        .pbox{
+            background-color: rgba(0,0,0,0);
+            border: 0px;
+            width: 100%;
+            height: 100%;
+            font-size:40px;
+            position: absolute;
+            cursor: pointer;
+            outline:none;
+            margin: 0;
+            padding: 0px 0px;
+            text-align: center;
+            user-select: none;
+        }
+        .divcover{
+            background-color: rgba(0,0,0,0);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 20;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            user-select: none;
+            margin: 0;
+            padding: 0px 0px;
+        }
+        input[type="text"]:focus {
+                        outline: none;
+                        box-shadow: none;
+                        border: none;
+                        user-select: none;
+                    }
+
+                    input[type="text"]:focus:hover {
+                        outline: none;
+                        box-shadow: none;
+                        border: none;
+                        border-radius: 0;
+                        user-select: none;
+                    }
+        #linebox{
+            z-index: 10;
+            height: 800px;
+            width: 1px;
+            position: absolute;
+            background-color: red;
+        }
+        @keyframes identifier {
+            0%{
+                transform: scaleX(100%) scaleY(100%);
+            }
+            20%{
+                transform: scaleX(90%) scaleY(110%);
+            }
+            80%{
+                transform: scaleX(110%) scaleY(90%);
+            }
+            100%{
+                transform: scaleX(100%) scaleY(100%);
+            }
+        }
+        #ddpage{
+            width: 105%;
+            height: 105%;
+            position: absolute;
+            top: -5%;
+            left: -2.5%;
+            background-image: url(./css/images/thisisit.png);
+            z-index: -1;
+            background-size: 100% 100%;
+            border-radius: 15px;
+            background-color: #7d7d7d;
+            background-position: center;
+            box-shadow: 0px 0px 10px 10px #7d7d7d;
+        }
+    </style>
+    <!-- <div id="linebox"></div> -->
+    <div id="shakingbox">
+        <div id="ddpage"></div>
+    </div>
+    <div class="onf">ON</div>
+    <div class="onf">OFF</div>
+    <div class="create">Create</div>
+    <div class="create2">Create2</div>
+    <script>
+        //default
+        const vW = $(document).width();
+        const vH = $(document).height();
+        const boxM = $('#shakingbox');
+        let MaxNum01 = 20;
+        const MakeBoxDelay = 100;
+        let ScreenVH = true;
+        let stopall = false;
+        let boxW = 800;
+        let boxH = 400;
+        let Reha = false;
+        let f0 = 0;
+        let hundBox = []
+        let usedBox = []
+        let zoneUsedBox = []
+        let madeBox = []
+        let minibox = "50px"
+        
+        //default --//
+        let sizebox = default1_sizeUp(vW, vH);
+        console.log(sizebox)
+        default2_sizeIn(sizebox, boxM);
+        let rangebox = default5_dvide();
+        console.log(rangebox)
+        default6_zoneing();
+        default4_boxMax();
+        console.log(MaxNum01)
+        $(document).on("click", ".onf", function () {
+            if ($(this).text() == "ON") {
+                Reha = true;
+                minibox = "30px"
+            } else {
+                Reha = false;
+                minibox = "50px"
+            }
+        })
+
+        $(document).on("click", ".create", function () {
+            MakeBox0(30);
+
+        })
+        $(document).on("click", ".create2", function () {
+            crumbling_itselfH()
+
+        })
+        $(document).on("click", ".Rbox", function(){
+            killHim($(this));
+        })
+
+        //mainBox
+        function default1_sizeUp(a, b) {
+            let f = [];
+            let s800 = false;
+            if (a > 800) {
+                s800 = true;
+            }
+            let c = boxW;
+            let d = boxH;
+            let e1 = parseFloat(a / c);
+            let e2 = Math.floor(e1);
+            if (s800) {
+                if (e2 >= 2) {
+                    c = c * (e1 - 0.5);
+                    d = d * (e1 - 0.5);
+                }
+                else {
+                    if ((e1 - e2 > 0.49)) {
+                        c = c * 1.5;
+                        d = d * 1.5;
+                    }
+                    else {
+                        c = c * 1;
+                        d = d * 1;
+                    }
+                }
+            }
+            f.push(c);
+            f.push(d);
+            f.push(s800);
+            return f;
+        }
+        function default2_sizeIn(arr, box) {
+            let e = default3_topLeft(arr);
+
+            if (arr[2]) {
+                box.css({
+                    width: e[0],
+                    height: e[1],
+                    left: e[2],
+                    top: e[3],
+                    position: 'absolute',
+                    
+                })
+            }
+            else {
+                box.css({
+                    width: e[0],
+                    height: e[1],
+                    // left : e[2] + al,
+                    // top : e[3] +at,
+                    position: 'absolute',
+                    
+                    transform: 'rotate(90deg)'
+                })
+                let a0 = box.position();
+                let al = a0.left;
+                let at = a0.top;
+                al = -1 * al;
+                at = -1 * at;
+                box.css({
+
+                    left: al + e[2],
+                    top: at + e[3]
+                })
+                ScreenVH = false;
+            }
+            boxW = e[0];
+            boxH = e[1];
+            
+        }
+        function default3_topLeft(arr) {
+            let e = []
+            if (arr[2]) {
+                let a = vW;
+                let a1 = a / 2;
+                let b = arr[0];
+                let b1 = arr[0] / 2;
+                let c = vH;
+                let c1 = c / 2;
+                let d = arr[1];
+                let d1 = arr[1] / 2;
+                let b2 = a1 - b1;
+                let d2 = c1 - d1;
+                e = [b, d, b2, d2] //w, h, l, t
+            }
+            else {
+                let a = vW;
+                let a1 = a / 2;
+                let b = arr[0];
+                let b1 = arr[0] / 2;
+                let c = vH;
+                let c1 = c / 2;
+                let d = arr[1];
+                let d1 = arr[1] / 2;
+                let b2 = a1 - d1;
+                let d2 = c1 - b1;
+                e = [b, d, b2, d2] //w, h, l, t
+            }
+            return e;
+        }
+        function default4_boxMax() {
+            for (let i = 0; i < MaxNum01; i++) {
+                hundBox.push(i)
+            }
+        }
+        function default5_dvide() {
+            let a = ((boxW / 3));
+            let c = boxH
+            let b = [];
+            b.push(0);
+            b.push(parseFloat(a.toFixed(2)));
+            b.push(parseFloat((a * 2).toFixed(2)));
+            b.push(parseFloat((a * 3).toFixed(2)))
+            b.push(c)
+            return b
+        }
+        function default6_zoneing() {
+            let a = rangebox[3] - rangebox[2];
+            let b = 0;
+            let f = 0;
+            if (Reha) { b = 30;f=15; } else { b = 50;f=25; };
+            let c = rangebox[4];
+            let d1 = Math.floor(a / b);
+            let d2 = Math.floor(c / b);
+            let e = rangebox[2];
+            
+            let x = [];
+            let z = true
+            while (z) {
+                if (e >= rangebox[3]-b) {
+                    e = rangebox[2]
+                    f += b
+                    if (f >= c-b) {
+                        z = false;
+                        break;
+                    }
+
+                } else {
+
+                }
+                x.push(e);
+                x.push(f);
+                e += b;
+                madeBox.push(x)
+                x = []
+            }
+            if(madeBox.length -2<100){
+            MaxNum01 = madeBox.length -2;}
+            else{MaxNum01=99}
+            console.log(madeBox)
+        }
+        //mainBox --//
+        //RandomNumber
+        function RandomNum0_One() {
+            let a = Math.random()
+            let b = Math.floor(a * 10); //0~9
+            return b;
+        }
+        function RandomNum1_Ten() {
+            let a = Math.random()
+            let b = Math.floor(a * 100); //0~99
+            return b;
+        }
+        function RandomNum3_Thou() {
+            let a = Math.random()
+            let b = Math.floor(a * 1000); //0~999
+            return b;
+        }
+        function RandomNum4_255() {
+            let b = true;
+            let a = RandomNum3_Thou();
+            while (b) {
+                a = RandomNum3_Thou();
+                if (a <= 255 && a > 0) {
+                    b = false;
+                }
+                else {
+                    b = true;
+                }
+            }
+            return a;
+        }
+        function RandomNum5_WantNumxyz(x, y, z) {
+            let a = Math.random()
+            let b = Math.floor(a * z); //0~9999
+            let c = true;
+            while (c) {
+                if (b > x && b < y) {
+                    c = false;
+                }
+                else {
+                    a = Math.random()
+                    b = Math.floor(a * z);
+                }
+            }
+            return b;
+        }
+
+        //RandomNumber--//
+        //Make Box
+        function MakeBox0(x) {
+            let az = 1;
+            if (hundBox.length<=x){
+               x=hundBox.length
+                while (az <= x) {
+                
+                MakeBox2(az)
+                az++
+                if (stopall) {
+                    az = x + 1
+                }
+                
+            }
+            }else{
+            while (az <= x) {
+                
+                MakeBox2(az)
+                az++
+                if (stopall) {
+                    az = x + 1
+                }
+                
+            }}
+            
+
+
+
+
+
+
+
+
+        }
+        function MakeBox1(locat, r, g, b, pl, pt, px) {
+            let ZZ = RandomNum5_WantNumxyz(0,10,10)
+            let Y = hundBox1_check();
+            
+            if (Y == MaxNum01) {
+                console.log("done")
+                stopall = true;
+                return;
+            } else {
+                usedBox.push(Y)
+                let Z = `<div class='Rbox box${Y}'>`
+                let X = `<p class="locationBox">${px}</p><input class="pbox" value='${ZZ}'><p class='divcover'></p></div>`
+                locat.append(Z + X);
+                $(`.box${Y}`).css({
+                    width: minibox,
+                    height: minibox,
+                    backgroundColor: `rgb(${r},${g},${b})`,
+                    position: 'absolute',
+                    top: pt,
+                    left: pl,
+                    border: `1px solid rgb(${b},${r},${g})`,
+                    borderRadius: '3px'
+
+                })
+            }
+        }
+        function MakeBox2(az) {
+            setTimeout(function () {
+                if (!stopall) {
+                    let a = rangebox[2] + parseInt(minibox) + parseInt(minibox);
+                    let b = rangebox[3] - parseInt(minibox);
+                    let c = rangebox[4] - parseInt(minibox);
+                    let R = RandomNum4_255();
+                    let G = RandomNum4_255();
+                    let B = RandomNum4_255();
+                    let PX = MakeBox3_position();
+                    let PL = PX[0]
+                    let PT = PX[1]
+                    MakeBox1(boxM, R, G, B, PL, PT, PX)
+                }
+            }, MakeBoxDelay * az)
+        }
+        function MakeBox3_position() {
+            let PO = RandomNum5_WantNumxyz(0, madeBox.length  , 100000);
+            let PX = madeBox[PO];
+            let PY = zoneUsedBox.findIndex((n) => n == PX);
+            let Z = true;
+            while (Z) {
+                if (PY == -1) {
+                    Z = false;
+                    break;
+                } else {
+                    PO = RandomNum5_WantNumxyz(0, madeBox.length  , 100000);
+                    PX = madeBox[PO];
+                    PY = zoneUsedBox.findIndex((n) => n == PX);
+                }
+
+            }
+            zoneUsedBox.push(PX)
+            return PX
+        }
+        //Make Box--//
+        //use HundredBox
+        function hundBox1_check() {
+            let a = RandomNum1_Ten();
+            let x = hundBox.findIndex((n) => n == a);
+            let y = true;
+            while (y) {
+                if (hundBox.length != 0) {
+                    if (x != -1) {
+                        
+                        hundBox.splice(x, 1)
+                        y = false;
+                        break;
+                    }
+                    else {
+                        a = RandomNum1_Ten();
+                        x = hundBox.findIndex((n) => n == a);
+                       
+                    }
+                } else {
+
+                    y = false;
+                    a = MaxNum01
+                    break;
+                }
+            }
+            console.log("check done")
+            return a;
+        }
+        //use HundredBox--//
+        //crumbling action
+        function crumbling_itselfH() {
+            console.log(usedBox)
+            usedBox.forEach(keeping)
+
+        }
+        function keeping(value, index, array) {
+            let a2 = value;
+            let a = ".box" + value;
+            let a1 = $(`${a}`);
+            let e = index;
+            let c = 700 + RandomNum5_WantNumxyz(100, 500, 1000)
+            let d = setInterval(() => {
+            if(ScreenVH){
+                let b = a1.position();
+                let b1 = b.left;
+                moving(a1, b1, d, e, a2)
+                moving2(a1, c)
+            }else{
+                let b = a1.position();
+                let b1 = b.top;
+                moving(a1, b1, d, e, a2)
+                moving2(a1, c)
+            }
+            }, c)
+        }
+        function moving(a, b, c, d, e) {
+            if (b <= rangebox[1]) {
+                clearInterval(c)
+                a.stop();
+                let PY = zoneUsedBox.findIndex((n) => n == a.children('.locationBox').text());
+                let PZ = usedBox.findIndex((n)=>n==e)
+                
+                usedBox.splice(PZ, 1)
+                hundBox.push(e)
+                
+                
+                zoneUsedBox.splice(PY,1)
+                
+                stopall = false;
+                a.remove();
+            }
+        }
+        function moving2(a, b) {
+            if(ScreenVH){
+            a.animate({
+                left: "-=100"
+            }, b)
+            }
+            else{
+                a.animate({
+                left: "-=80"
+            }, b)    
+            }
+        }
+        //crumbling action--//
+        //kill action
+        function killHim(aa){
+            let a = aa.children('.pbox').val();
+            let b = parseInt(a);
+            let c = aa.attr("class");
+            c= c.split(" ")
+            let d = parseInt(c[1].replace('box',''))
+            
+            if(b>1){
+                b--;
+                aa.children('.pbox').val(b);
+            }
+            else{
+
+                aa.stop();
+                let PY = zoneUsedBox.findIndex((n) => n == aa.children('.locationBox').text());
+                let PZ = usedBox.findIndex((n)=>n==d)
+                
+                usedBox.splice(PZ, 1)
+                hundBox.push(d)
+                
+                
+                zoneUsedBox.splice(PY,1)
+                
+                stopall = false;
+                aa.remove();
+            }
+        }
+        //kill action--//
+    </script>
+</body>
+
+
+</html>

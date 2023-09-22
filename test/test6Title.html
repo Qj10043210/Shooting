@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
+    integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <style>
+        #shakingbox{
+          
+            border: 2px solid black;
+            border-radius: 5px;
+            
+        }
+        #titleBox{
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left:0;
+            background-color: antiquewhite;
+            position: absolute;
+            background-image: url(./css/images/DefenseTitle.png);
+            background-repeat: no-repeat;
+            background-position-x: 50%;
+            background-position-y: 20%;
+            background-size: 60%;
+           
+            box-sizing: border-box;
+        }
+        #ttop1{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 60%;
+            height: 40%;
+            
+            background-color: rgba(0,0,0,0.3);
+        }
+        #ttop2{
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60%;
+            height: 40%;
+            transform: skewX(-30deg);
+            background-color: rgba(0,0,0,0.3);
+        }
+        
+
+    </style>
+        <div id="shakingbox">
+           <div id="titleBox">
+            <div id="ttop1"></div>
+            
+           </div>
+        </div>
+
+    <script>
+        //default
+        const vW = $(document).width();
+        const vH = $(document).height();
+        const boxM = $('#shakingbox');
+        let MaxNum01 = 20;
+        const MakeBoxDelay = 100;
+        let ScreenVH = true;
+        let stopall = false;
+        let boxW = 800;
+        let boxH = 400;
+        let Reha = false;
+        let f0 = 0;
+        let hundBox = []
+        let usedBox = []
+        let zoneUsedBox = []
+        let madeBox = []
+        let minibox = "50px"
+        
+        //default --//
+        let sizebox = default1_sizeUp(vW, vH);
+        default2_sizeIn(sizebox, boxM);
+        let rangebox = default5_dvide();
+        console.log(rangebox)
+        default6_zoneing();
+        default4_boxMax();
+        default7_boxBoard();
+         //mainBox
+         function default1_sizeUp(a, b) {
+            let f = [];
+            let s800 = false;
+            if (a > 800) {
+                s800 = true;
+            }
+            let c = boxW;
+            let d = boxH;
+            let e1 = parseFloat(a / c);
+            let e2 = Math.floor(e1);
+            if (s800) {
+                if (e2 >= 2) {
+                    c = c * (e1 - 0.5);
+                    d = d * (e1 - 0.5);
+                }
+                else {
+                    if ((e1 - e2 > 0.49)) {
+                        c = c * 1.5;
+                        d = d * 1.5;
+                    }
+                    else {
+                        c = c * 1;
+                        d = d * 1;
+                    }
+                }
+            }
+            f.push(c);
+            f.push(d);
+            f.push(s800);
+            return f;
+        }
+        function default2_sizeIn(arr, box) {
+            let e = default3_topLeft(arr);
+
+            if (arr[2]) {
+                box.css({
+                    width: e[0],
+                    height: e[1],
+                    left: e[2],
+                    top: e[3],
+                    position: 'absolute',
+                    backgroundColor: 'azure'
+                })
+            }
+            else {
+                box.css({
+                    width: e[0],
+                    height: e[1],
+                    // left : e[2] + al,
+                    // top : e[3] +at,
+                    position: 'absolute',
+                    backgroundColor: 'azure',
+                    transform: 'rotate(90deg)'
+                })
+                let a0 = box.position();
+                let al = a0.left;
+                let at = a0.top;
+                al = -1 * al;
+                at = -1 * at;
+                box.css({
+
+                    left: al + e[2],
+                    top: at + e[3]
+                })
+                ScreenVH = false;
+            }
+            boxW = e[0];
+            boxH = e[1];
+            
+        }
+        function default3_topLeft(arr) {
+            let e = []
+            if (arr[2]) {
+                let a = vW;
+                let a1 = a / 2;
+                let b = arr[0];
+                let b1 = arr[0] / 2;
+                let c = vH;
+                let c1 = c / 2;
+                let d = arr[1];
+                let d1 = arr[1] / 2;
+                let b2 = a1 - b1;
+                let d2 = c1 - d1;
+                e = [b, d, b2, d2] //w, h, l, t
+            }
+            else {
+                let a = vW;
+                let a1 = a / 2;
+                let b = arr[0];
+                let b1 = arr[0] / 2;
+                let c = vH;
+                let c1 = c / 2;
+                let d = arr[1];
+                let d1 = arr[1] / 2;
+                let b2 = a1 - d1;
+                let d2 = c1 - b1;
+                e = [b, d, b2, d2] //w, h, l, t
+            }
+            return e;
+        }
+        function default4_boxMax() {
+            for (let i = 0; i < MaxNum01; i++) {
+                hundBox.push(i)
+            }
+        }
+        function default5_dvide() {
+            let a = ((boxW / 3));
+            let c = boxH
+            let b = [];
+            b.push(0);
+            b.push(parseFloat(a.toFixed(2)));
+            b.push(parseFloat((a * 2).toFixed(2)));
+            b.push(parseFloat((a * 3).toFixed(2)))
+            b.push(c)
+            return b
+        }
+        function default6_zoneing() {
+            let a = rangebox[3] - rangebox[2];
+            let b = 0;
+            if (Reha) { b = 30; } else { b = 50; };
+            let c = rangebox[4];
+            let d1 = Math.floor(a / b);
+            let d2 = Math.floor(c / b);
+            let e = rangebox[2];
+            let f = 0;
+            let x = [];
+            let z = true
+            while (z) {
+                if (e >= rangebox[3]-b) {
+                    e = rangebox[2]
+                    f += b
+                    if (f >= c) {
+                        z = false;
+                        break;
+                    }
+
+                } else {
+
+                }
+                x.push(e);
+                x.push(f);
+                e += b;
+                madeBox.push(x)
+                x = []
+            }
+            MaxNum01 = madeBox.length -2;
+
+        }
+        function default7_boxBoard(){
+            let a =  boxW;
+            let b =  boxH;
+            let c = 30;
+            let d = $('#ttop1').height();
+            $('#ttop1').css({
+                transform: `skewX(${c}deg)`,
+                left:`${d/(Math.tan(c))}px`
+            })
+            
+            
+        }
+        //mainBox --//
+    </script>
+</body>
+</html>

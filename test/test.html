@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
+        integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    <p>show me how much this window size</p>
+    <div id="mainBox">
+        <div id="box1" class="box"></div>
+        <div id="box2"></div>
+        <div id="box3" class="box"><span>1</span></div>
+    </div>
+    <style>
+        #box1 {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            background-color: red;
+            transition: left 0.5s;
+        }
+        #box2 {
+            width: 1px;
+            height: 50px;
+            position: absolute;
+            top: 0px;
+            left: 300px;
+            background-color: red;
+            transition: left 0.1s;
+        }
+        #box3{
+            position: absolute;
+            width: 50px;
+            border: 1px solid black;
+            height: 50px;
+        }
+        #mainBox {
+            position: absolute;
+
+            background-color: aqua;
+        }
+    </style>
+    <script>
+        const Vwidth = $(document).width();
+        const Vheight = $(document).height();
+        $('body').append(`<p>W : ${Vwidth} H : ${Vheight}</p>`)
+        let a = 400;
+        let b = 800;
+        let g = 0;
+        let h;
+        let e = Vwidth / b;
+        let f = Math.floor(Vwidth / b);
+        
+        if (f >= 2) {
+            a = a * (f - 1 + 0.65);
+            b = b * (f - 1 + 0.65);
+        }
+        else {
+            if (e < (f + 0.5)) {
+                a = a * (f + 0.15);
+                b = b * (f + 0.15);
+            } else {
+                a = a * (f + 0.35);
+                b = b * (f + 0.35);
+            }
+        }
+        let c = Vwidth / 2 - b / 2;
+        let d = Vheight / 2 - a / 2;
+        $('#mainBox').css({
+
+            width: b,
+            height: a,
+            top: d,
+            left: c
+        })
+        $('#box1').css({
+
+
+            top: 0,
+            left: b - 50
+        })
+        $('#box3').css({
+
+        
+        top: 50,
+        left: b - 50,
+        textAlign:'center'
+})  
+$('span').css({
+    fontSize:'50px',
+    lineHeight : '50px'
+})
+        $(document).on("click", ".box", function () {
+
+            let a1 = setInterval(() => {
+                let b1 = $(this).position()
+                let c1 = b1.left;
+                // console.log(g)
+                moving($(this), c1, a1)
+                moving2($(this))
+
+                
+            }, 500)
+
+
+        })
+        function moving(here, c, a) {
+            if (c <= 250) {
+                here.css({
+                    backgroundColor:'white'
+                })
+                here.stop();
+                clearInterval(a)
+            }
+
+
+        }
+        function moving2(here){
+            $(here).animate({
+                    left: "-=150"
+
+                }, 500)
+        }
+        $(document).on("click", "p", function () {
+            boxIng()
+        })
+        function boxIng(){
+            
+            
+            for (let i=4; i<10; i++){
+                let z1 = Math.floor(Math.random() *10);
+                let x1 = "<div class='box' id='box"
+                let x2 = "'></div>"
+                x1 +=i;
+                x1 += x2;
+                $('#mainBox').append(x1)
+                $(`#box${i}`).css({
+                    position:'absolute',
+                    width:'50px',
+                    height:'50px',
+                    backgroundColor : `rgb(${100+z1*5},${100-z1*5},${Math.floor(100/z1)})`,
+                    top:z1 * 30,
+                    left : 800 + z1 * 10
+                })
+            }
+
+        }
+
+
+    </script>
+</body>
+
+</html>

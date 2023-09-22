@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
+    integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <style>
+        #four{
+            width: 1520px;
+            height: 760px;
+            background-color: rgba(210, 105, 30, 0.607);
+            border: 2px solid black;
+            border-radius: 5px;
+            margin: 40px auto;
+            position: relative;
+        }
+       
+            #hpbar{
+            width: 100%;
+            height: 4%;
+            position: absolute;
+            left: 0;
+            
+            background-color: red;
+        }
+        #infobox{
+            top:5px;
+            position: absolute;
+            width:15%;
+            height: 15%;
+            background-color: azure;
+        }
+        #deldel{
+            height: 100%;
+            position: absolute;
+            background-color: black;
+            top: 0;
+            right: 0;
+        }
+        input[type=text]{
+            width: 100%;
+        }
+        #damage{
+            position: absolute;
+            bottom:0;
+            right: 0;
+            font-size: 50px;
+            cursor: pointer;
+            background-color: aliceblue;
+            
+        }
+        
+
+    </style>
+        <div id="four">
+            <div id="hpbar">
+                <div id="deldel"></div>
+            </div>
+            <div id="infobox">
+                <input type="text" name="" id="max" value="100">
+                <input type="text" name="" id="current" value="100">
+            </div>
+            <div id="damage">-</div>
+        </div>
+
+    <script>
+        let a = $('#hpbar').height();
+        let b = $('#infobox').width();
+        let c = $('#hpbar').width();
+        $(document).on("click","#damage",function(){
+            let z=$("#current").val();
+            z--;
+            $("#current").val(z)
+            change()
+        })
+        $('#hpbar').css({
+            bottom: -a - a/10
+        })
+        $('#infobox').css({
+            left: -b + b/10
+        })
+        $(document).on("change", "#current",change())
+        function change(){
+            let d = $('#max').val();
+            let e = $('#current').val();
+            let f = 100- Math.floor(e / d * 100);
+            console.log(f)
+            f += "%"
+            $("#deldel").css({
+                width : f
+            })
+        }
+    </script>
+</body>
+</html>

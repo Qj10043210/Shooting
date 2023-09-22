@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
+        integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Phudu&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+        @font-face {
+            font-family: 'kppuskum';
+            src: url(./font/kppuskum.ttf) format('truetype');
+        }
+
+        #qqq {
+            width: 50px;
+            height: 50px;
+            border: 1px solid black;
+            background-color: cornsilk;
+            position: absolute;
+            top: 300px;
+            left: 300px;
+        }
+
+        .www1 {
+            width: 80%;
+            height: 80%;
+            top: 0%;
+            right: 0%;
+            background-image: url(./css/images/blood.png);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            position: absolute;
+            display: none;
+
+        }
+
+        .b50 {
+            width: 50px;
+            height: 50px;
+            border: 1px solid black;
+            background-color: cornsilk;
+            margin: 50px auto;
+        }
+        span{
+            display: inline-block;
+            padding: 0px;
+            word-wrap: break-word;
+            font-size: 15px;
+            
+            /* text-align: center; */
+            
+        }
+        .b50:nth-of-type(1)>.font50 {
+            font-family: 'Luckiest Guy';
+            
+        }
+
+        .b50:nth-of-type(2)>.font50 {
+            font-family: 'Phudu';
+            
+        }
+
+        .b50:nth-of-type(3)>.font50 {
+            font-family: 'Rock Salt';
+            
+        }
+
+        .b50:nth-of-type(4)>.font50 {
+            font-family: 'Pacifico'
+        }
+
+        .b50:nth-of-type(5)>.font50 {
+            font-family: 'Share Tech Mono'
+        }
+    </style>
+   
+    <div class="b50">
+        <span class="font50">9</span>
+    </div>
+    <div class="b50">
+        <span class="font50">9</span>
+    </div>
+    <div class="b50">
+        <span class="font50">9</span>
+        <span>난이도 boss</span>
+    </div>
+    <div class="b50">
+        <span class="font50">9</span>
+        <span>난이도 3</span>
+    </div>
+    <div class="b50">
+        <span class="font50">9</span>
+        <span>난이도 2</span>
+    </div>
+    <div class="b50">
+        <span class="font50">9</span>
+        <span>난이도 1</span>
+    </div>
+    <div style="font-family: 'VT323'; font-size:30px" >Hello this is </div>
+    <script>
+        $(document).on("click", ".b50", function () {
+            doSize($(this).children('.font50:first'))
+        })
+
+        function doSize(span){
+            let a = span.height();
+            let b = span.width();
+            let c = span.parent().height();
+            let d = span.parent().width();
+            let t = span.css("font-size")
+          
+            
+            do{
+                
+                b = span.width()
+                t = parseFloat(t)
+                t = t + 0.5;
+                t = t + "px"
+                span.css("font-size",t)
+                
+
+            }while( b<d )
+            do{
+                a = span.height()
+                t = span.css("font-size")
+                t = parseFloat(t)
+                t = t - 0.5;
+                t = t + "px"
+                span.css("font-size",t)
+                span.css("line-height",t)
+                console.log("aa")
+
+            }while( a>=c )
+            
+            span.parent().css('text-align','center')
+        }
+
+    </script>
+</body>
+
+</html>

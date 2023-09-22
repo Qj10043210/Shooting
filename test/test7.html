@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
+        integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    <style>
+        #box {
+            width: 1200px;
+            height: 600px;
+            /* background-color: cornflowerblue; */
+            position: absolute;
+            margin: 200px;
+            /* overflow: hidden; */
+
+        }
+        #boxbg{
+            width: 60%;
+            height: 60%;
+            background-image: url(./css/images/DefenseTitleKr.png);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            position: absolute;
+            top: 10%;
+            left: 18%;
+            
+            z-index: 500;
+        }
+        .boxx {
+            
+            position: absolute;
+            width: calc(100% / 15);
+            height: 35%;
+            
+            opacity: 1;
+        }
+        .boxx:nth-of-type(odd){
+            background-color: rgb(113, 255, 61);
+            
+            
+
+        }
+        .boxx:nth-of-type(even){
+            background-color: rgb(255, 0, 183);
+            
+        }
+        #kss {
+            margin-left: 350px;
+            height: 1px;
+            width: 273.21px;
+            background-color: aqua;
+        }
+        @keyframes ddeul {
+            0%{
+          
+               filter: brightness(100%);
+            }
+            40%{
+                
+                filter: brightness(30%);
+            }
+            80%{
+               
+                filter: brightness(120%);
+            }
+            100%{
+                filter: brightness(100%);
+            }
+        }
+        #q100 {
+            height: 11px;
+            margin-top: 1px;
+            width: 100px;
+            margin-left: 350px;
+            background-color: red;
+        }
+    </style>
+    <div id="box">
+        <div id="boxbg"></div>
+
+
+    </div>
+    <div id="kss"></div>
+    <div id="q100"></div>
+    <script>
+        $(document).on("click", "#q100", function () {
+            console.log("aabb")
+            doodo()
+        })
+
+        function doodo() {
+            console.log("aa")
+            let a = $('#skew').width();
+            let b = $('#skew').height();
+
+
+            let d2 = d * Math.PI / 180
+
+
+            let e = Math.tan(d2)
+
+            let f = (e).toFixed(2)
+            let f1 = b * f;
+            f1 = f1 / 2
+            f1 = f1
+
+            let f2 = f1 + "px"
+            console.log(f2)
+            $('#skew').css({
+                left: f2,
+                transform: `skewX(${d}deg)`
+            })
+
+
+        }
+        let howmuchweneed =6
+        function MakeBox(){
+            let a = howmuchweneed *2 +1;
+            // let b = (howmuchweneed+1) -2
+            for(let i=0; i<(a)*2;i++){
+            $('#box').append(`<div class='boxx box${i}'></div>`)
+            }
+        }
+        MakeBox()
+        MakeSun()
+        function MakeSun() {
+            let x = $(`.boxx`).height();
+            let y = $('#box').width();
+            let x1 = y / (howmuchweneed*2);
+            let allhereplease= []
+            let x2 = []
+            for (let i = 0; i < (howmuchweneed*2 )+1; i++) {
+                x2.push(x1 * i)
+            }
+            let start = 30
+            let start2 = (start * 2)/(howmuchweneed*2)
+            let finish = (-1 * start) -start2
+            let pp=0
+            for (let q = start; q > finish; q -= start2) {
+                let yy = []
+                if (q > 0) {
+                    let z = q * (Math.PI / 180)
+                    z = Math.tan(z)
+                    z = (z).toFixed(2)
+                    z = (x) * z;
+                    z = z / 2
+
+                    z = (x2[pp] + z)
+                    z += "px"
+                    
+                    yy.push(z);
+                    yy.push(`skewX(${q}deg)`)
+                    
+                    pp++;
+                }
+                else if(pp==howmuchweneed){
+                    let z = q * (Math.PI / 180)
+                    z = Math.tan(z)
+
+                    z = (z).toFixed(2)
+
+                    z = (x) * z;
+                    
+                    z = z / 2
+                    let zz = $(`.box${pp}`).width()
+                    z = (x2[pp] - zz/2)
+                    z += "px"
+
+                    
+                    yy.push(z);
+                    yy.push(`skewX(${q}deg)`)
+                    
+                    pp++;
+                }
+                else {
+                    
+                   
+                    let z = x * (Math.tan((-1 * q) * Math.PI / 180)).toFixed(2) / 2
+                    z = x2[(howmuchweneed*2)-pp] + z + "px"
+                    
+                    yy.push(z);
+                    yy.push(`skewX(${q}deg)`)
+                    
+                    pp++;
+                }
+                    allhereplease.push(yy)
+            }
+            console.log(allhereplease)
+            for(let p=0; p<=(howmuchweneed*4)+1;p++){
+                if(p>=0&&p<=2*howmuchweneed){ //top
+                    if(p<howmuchweneed){ //left
+                        $(`.box${p}`).css({
+                        left:allhereplease[p][0],
+                        transform:allhereplease[p][1],
+                        top:0
+                    })
+                    }else if(p==howmuchweneed){
+                        $(`.box${p}`).css({
+                        left:allhereplease[p][0],
+                        transform:allhereplease[p][1],
+                        top:0
+                    })
+                    }else{ //right
+                        $(`.box${p}`).css({
+                        right:allhereplease[p][0],
+                        transform:allhereplease[p][1],
+                        top:0
+                    })
+                    }
+                
+                    
+                }else{ //bottom
+                    if(p<(howmuchweneed*3)+1){ //left
+                        $(`.box${p}`).css({
+                        left:allhereplease[(4*howmuchweneed)+1-p][0],
+                        transform:`${allhereplease[(4*howmuchweneed)+1-p][1]} rotate(180deg)`,
+                        bottom:0
+                        
+                    })
+                    }else if(p==(howmuchweneed*3+1)){
+                        $(`.box${p}`).css({
+                        left:allhereplease[(4*howmuchweneed)+1-p][0],
+                        transform:`${allhereplease[(4*howmuchweneed)+1-p][1]} rotate(180deg)`,
+                        bottom:0
+                    })
+                    }else{ //right
+                        $(`.box${p}`).css({
+                        right:allhereplease[(4*howmuchweneed)+1-p][0],
+                        transform:`${allhereplease[(4*howmuchweneed)+1-p][1]} rotate(180deg)`,
+                        bottom:0
+                    })
+                    }
+                }
+                
+              
+            // if((p%2==1)){
+            //     $(`.box${p}`).css({
+                    
+            //        animation: 'ddeul 2s linear infinite';
+            //     })
+            // }else{
+            //     $(`.box${p}`).css({
+                    
+            //         backgroundColor:`rgba(${100+5*p},${100+5*p},${100+5*p},1)`
+            //     })
+            // }
+
+            }
+            let kkk1=0;
+            
+            let kkk = setInterval(()=>{
+                $(`.box${kkk1}`).css({
+                    
+                    animation: 'ddeul 2s linear infinite',
+                    
+                    })
+                    kkk1++;
+            },400)
+            if(kkk1==howmuchweneed*4){
+                clearInterval(kkk)
+            }
+        }
+    </script>
+    <script>
+        // make box with even numbeeeeeeerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+        // function MakeSun() {
+        //     let x = $(`.boxx`).height();
+        //     let y = $('#box').width();
+        //     let x1 = y / (howmuchweneed*2);
+            
+        //     let x2 = []
+        //     for (let i = 0; i < (howmuchweneed*2 )+1; i++) {
+        //         x2.push(x1 * i)
+        //     }
+        //     let start = 30
+        //     let start2 = (start * 2)/(howmuchweneed*2)
+        //     let finish = (-1 * start) -start2
+        //     for(let p=0; p<howmuchweneed*6;p++){
+        //         if(p>=0&&p<=2*howmuchweneed){
+        //             console.log("top"+p)
+        //         }else if(p>2*howmuchweneed&&p<=(3*howmuchweneed)-1){
+        //             console.log("right"+p)
+        //         }else if(p<=5*howmuchweneed&&p>(3*howmuchweneed)-1){
+        //             console.log("bottom"+p)
+        //         }else{
+        //             console.log("left"+p)
+        //         }
+        //     }
+        // }
+    </script>
+
+</body>
+
+</html>

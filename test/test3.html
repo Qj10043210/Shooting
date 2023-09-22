@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
+        integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <div id="id"></div>
+    <style>
+        #id{
+            position: absolute;
+            width: 800px;
+            height: 400px;
+            background-color: red;
+            border: 1px solid black;
+        }
+    </style>
+    <script>
+        $('#id').css(
+           { transform : 'rotate(90deg)',
+                left : '-200px',
+                top : '200px'
+            }
+        )
+        $(document).on("click","#id",function(){
+            let b1 = $(this).position()
+                let c1 = b1.left;
+                let c2 = b1.top;
+                console.log("l"+c1+" t"+c2)
+                b1.left = '0px'
+        })
+    </script>
+</body>
+</html>
