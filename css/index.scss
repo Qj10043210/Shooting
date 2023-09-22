@@ -1,3 +1,231 @@
+@font-face {
+    font-family: 'kppuskum';
+    src: url(./font/kppuskum.ttf) format('truetype');
+}
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+.t2{
+    font-family: 'kppuskum';
+}
+.t3{
+
+}
+.t4{
+    font-family: 'VT323';
+
+}
+
 #mainBox{
-    background-color: antiquewhite;
+    // background-color: antiquewhite;
+}
+#sideBox{
+    display: none;
+    &.view{
+        animation: a02_displaySlow 1s linear;
+        display: block;
+    }
+    #sideDifficulty{
+        width: 80%;
+        height: 50%;
+        position: absolute;
+        top: 30%;
+        left: 10%;
+        // background-color: aqua;
+        display: none;
+        justify-content: space-around;
+        align-items: center;
+        &.view{
+            display: flex;
+        }
+        span{
+            display: inline-block;
+            padding: 0px;
+            user-select: none;
+        }
+        
+        
+        .diffTitle{
+            position: absolute;
+            top: -30%;
+            width: 100%;
+            height: 30%;
+            // background-color: red;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            
+            .t1{
+            display: block;
+            font-size: 10px;
+            }
+            
+
+        }
+        .diff{
+            flex-basis: 30%;
+            height: 50%;
+            // background-color: red;
+            flex-grow: 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            span{
+                cursor: pointer;
+                
+            }
+            
+            
+            
+        }
+        div:nth-last-child(1){
+            span{
+                &:hover{
+                
+                    background: linear-gradient(
+                        to right,
+                        #000000 40%,
+                        #a5a5a5 50%,
+                        #000000 100%
+                        
+                    );
+                    -webkit-background-clip: text;
+                    background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-size: 400% auto;
+                    animation: a01_colorshow 5s linear infinite normal;
+                }
+            }
+        }
+        div:nth-last-child(2){
+            span{
+                &:hover{
+                
+                    background: linear-gradient(
+                        to right,
+                        #000000 10%,
+                        #fe0404 20%,
+                        #f8f81f 30%,
+                        #1736ff 70%,
+                        #2aff4a 80%
+                    );
+                    -webkit-background-clip: text;
+                    background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-size: 400% auto;
+                    animation: a01_colorshow 3s linear infinite alternate;
+                }
+            }
+        }
+    }
+    #sideRealDifficulty{
+        width: 80%;
+        height: 50%;
+        position: absolute;
+        top: 30%;
+        left: 10%;
+        background-color: aqua;
+        display: none;
+        justify-content: space-around;
+        align-items: center;
+        
+        &.view{
+            display: flex;
+            
+        }
+        .diffRTitle{
+            position: absolute;
+            top: -30%;
+            width: 100%;
+            height: 30%;
+            // background-color: red;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            
+            .t1{
+            display: block;
+            font-size: 10px;
+            }
+            .t2 , .t4{
+                display: none;
+            &.view{
+                display: inline-block;
+            }
+            }
+            
+
+        }
+        .diff{
+            flex-basis: 30%;
+            height: 50%;
+            background-color: rgb(73, 197, 64);
+            flex-grow: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            align-items:center;
+            cursor: pointer;
+            .t2, .t4{
+                display: none;
+                transform: scale(50%);
+                &.view{
+                    display: inline-block;
+                }
+            }
+            .monsterBox{
+                display: flex;
+                justify-content: center;
+                gap:15%;
+                div{
+                    flex-grow: 0;
+                    flex-shrink: 0;
+                }
+            }
+            
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@keyframes a01_colorshow {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+@keyframes a02_displaySlow {
+    0%{
+
+        color: white;
+    }
+    100%{
+        color: black;
+    }
+}
+@keyframes a03_beating {
+    0%{
+        transform: scaleX(100%) scaleY(100%);
+    }
+    20%{
+        transform: scaleX(90%) scaleY(110%);
+    }
+    80%{
+        transform: scaleX(110%) scaleY(90%);
+    }
+    100%{
+        transform: scaleX(100%) scaleY(100%);
+    }
 }

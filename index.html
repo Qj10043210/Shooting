@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,11 +13,47 @@
     <link rel="stylesheet" href="./css/index.css">
 
 </head>
+
 <body>
     <div id="mainBox"></div>
-    <div id="sideBox"><!-- Everything above mainbox -->
-        
+    <div id="sideBox" class=""><!-- Everything above mainbox -->
+        <div id="sideDifficulty">
+            <div class="diffTitle">
+                <p class="t1"><span class="t2">언어를 선택하십시오</span> <span class="t3"> / </span> <span class="t4">Choose
+                        your language</span></p>
+            </div>
+            <div class="diff t2"><span>문화어</span></div>
+            <div class="diff t4"><span>ENG</span></div>
+        </div>
+        <div id="sideRealDifficulty">
+            <div class="diffRTitle">
+                <p class="t1"><span class="t2">어렵기를 선택하십시오</span><span class="t4">Choose difficulty</span></p>
+            </div>
+            <div class="diff">
+                <div class="monsterBox">
+                    <div class="tempMonsterR"></div>
+                    <div class="tempMonsterR"></div>
+                    <div class="tempMonsterR"></div>
+                    <div class="tempMonsterR"></div>
+                </div>
+                <span class="t2">적당히</span><span class="t4">Regular</span>
+            </div>
+            <div class="diff">
+                <div class="monsterBox">
+                    <div class="tempMonsterH"></div>
+                    <div class="tempMonsterH"></div>
+                    <div class="tempMonsterH"></div>
+                    <div class="tempMonsterH"></div>
+                </div>
+                <span class="t2">어렵게</span><span class="t4">Hard</span>
+            </div>
+
+        </div>
+
+
     </div>
-<script type="module" src="./js/index.js"></script>
+
+    <script type="module" src="./js/index.js"></script>
 </body>
+
 </html>
