@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
+        integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap');
+        .qqq:hover{
+            cursor: url(./css/images/cursor.cur),auto;
+        }
+        .qqq {
+           
+            width: 100px;
+            height: 50px;
+            font-family: 'Comic Neue';
+            font-size: 15px;
+            border-collapse: collapse;
+            display: flex;
+            padding: 0;
+            margin: 0;
+        }
+        p{
+            padding: 0;
+            margin: 0;
+        
+        }
+        .location {
+            display: none;
+        }
+        .abs{
+            width: 50px;
+            height: 50px;
+            /* background-color: rgba(0, 0, 0, 0.135); */
+            animation: yeswecan 0.8s linear infinite both;
+            transform-origin: right;
+        }
+        .b50 {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(0, 0, 0, 0.135);
+        }
+        .font50{
+            display: inline-block;
+        }
+        @keyframes yeswecan {
+            0%{
+                
+                transform: rotateY(60deg);
+            }
+            100%{
+                transform: rotateY(-60deg);
+            }
+        }
+    </style>
+    <div class="qqq">
+        <p class="location">220,330</p>
+        <p class="abs">-</p>
+        <div class="b50"><span class="font50">9</span></div>
+        <p class="incover"></p>
+    </div>
+    <div class="qqq">
+        <p class="location">220,330</p>
+        <p class="abs">+</p>
+        <div class="b50"><span class="font50">9</span></div>
+        <p class="incover"></p>
+    </div>
+    <div class="qqq">
+        <p class="location">220,330</p>
+        <p class="abs">x</p>
+        <div class="b50"><span class="font50">9</span></div>
+        <p class="incover"></p>
+    </div>
+    <div class="qqq">
+        <p class="location">220,330</p>
+        <p class="abs">/</p>
+        <div class="b50"><span class="font50">9</span></div>
+        <p class="incover"></p>
+    </div>
+    <script>
+
+
+       
+        doSize($(".b50").children('.font50'))
+        function doSize(span) {
+            let a = span.height();
+            let b = span.width();
+            let c = span.parent().height();
+            
+            let d = span.parent().width();
+            let t = span.css("font-size")
+
+
+            do {
+
+                b = span.width()
+                t = parseFloat(t)
+                t = t + 0.5;
+                t = t + "px"
+                span.css("font-size", t)
+
+
+            } while (b < d)
+            do {
+                a = span.height()
+                t = span.css("font-size")
+                t = parseFloat(t)
+                t = t - 0.5;
+                t = t + "px"
+                span.css("font-size", t)
+                span.css("line-height", t)
+                console.log("aa")
+
+            } while (a > (c+ c*0.05))
+            span.parent().prev().css("font-size", t)
+            span.parent().prev().css("line-height", t)
+            span.parent().css('text-align', 'center')
+            span.parent().prev().css('text-align', 'right')
+
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+ let p = 0;
+            let x = $(`.boxx`).height();
+            let y = $('#box').width();
+            let x1 = y / (howmuchweneed*2);
+            
+            let x2 = []
+            for (let i = 0; i < (howmuchweneed*2 )+1; i++) {
+                x2.push(x1 * i)
+            }
+            let start = 30
+            let start2 = (start * 2)/(howmuchweneed*2)
+            let finish = (-1 * start) -start2
+            console.log(x2)
+            
+            for (let q = start; q > finish; q -= start2) {
+                
+                if (q > 0) {
+                    
+                    let z = q * (Math.PI / 180)
+                    z = Math.tan(z)
+
+                    z = (z).toFixed(2)
+
+                    z = (x) * z;
+                    
+                    z = z / 2
+
+                    z = (x2[p] + z)
+                    z += "px"
+
+                    $(`.box${p}`).css({
+                        left: z,
+                        transform: `skewX(${q}deg)`
+                    })
+                    p++;
+                }
+                else if(p==howmuchweneed){
+                    let z = q * (Math.PI / 180)
+                    z = Math.tan(z)
+
+                    z = (z).toFixed(2)
+
+                    z = (x) * z;
+                    
+                    z = z / 2
+                    let zz = $(`.box${p}`).width()
+                    z = (x2[p] - zz/2)
+                    z += "px"
+
+                    $(`.box${p}`).css({
+                        left: z,
+                        transform: `skewX(${q}deg)`
+                    })
+                    p++;
+                }
+                else {
+                    
+                   
+                    let z = x * (Math.tan((-1 * q) * Math.PI / 180)).toFixed(2) / 2
+                    z = x2[(howmuchweneed*2)-p] + z + "px"
+                    $(`.box${p}`).css({
+                        right: z,
+                        transform: `skewX(${q}deg)`
+                    })
+                    p++;
+                }
+            }
+            console.log(p)

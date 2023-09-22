@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
+        integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <style>
+        #here { 
+            width: 300px;
+            height: 300px;
+            background-color: rebeccapurple;
+        }
+        #but{
+            width: 120px;
+            height: 120px;
+            background-color: aquamarine;
+        }
+        #box{
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 100px;
+            left:100px;
+            background-color: bisque;
+            
+        }
+        #moving{
+            width: 50px;
+            height: 50px;
+            font-size:50px;
+            line-height : 50px;
+            text-align: center;
+        }
+        .classs{
+            animation: identifier 0.8s linear infinite
+        }
+        @keyframes identifier {
+            0%{
+                transform: scaleX(100%) scaleY(100%);
+            }
+            20%{
+                transform: scaleX(90%) scaleY(110%);
+            }
+            80%{
+                transform: scaleX(110%) scaleY(90%);
+            }
+            100%{
+                transform: scaleX(100%) scaleY(100%);
+            }
+        }
+    </style>
+    <div id="here"></div>
+    <div id="but"></div>
+    <div id="moving" class="classs">1</div>
+    <script>    
+        $(document).on("click", "#but", function(){
+            $("#here").append("<div class='box'></div>")
+        })
+var checkDiv = setInterval(function(){
+
+var my_div_width = $(".box").width(); // find width
+
+if( my_div_width > 0) { 
+	clearInterval(checkDiv);
+	 	aTestFunction();
+	}
+}, 10); // check after 10ms every time
+
+function aTestFunction(){
+	console.log("do")
+}
+function test(){
+let qq = [2, 3, 5, 11, 12];
+while(qq.length>0){
+    qq.forEach(test2)
+}
+}
+function test2(t, dex, ar){
+    console.log(t)
+    ar.splice(dex,1)
+}
+test()
+    </script>
+</body>
+</html>
