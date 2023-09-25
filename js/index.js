@@ -13,6 +13,7 @@ let boxZoneValueArray = []; //[0, 1stLine, 2ndLine, lastLine, height]
 let boxHowMuchweNeed = []; //Made Numbers as MaxEntity
 let monsterSize = "";
 let optionChoose = {ObLang:"",Obdiffi:""};
+let titleSize ="";
 //default//
     let defaultSizeTWH = default01_measuringBox(visualWidth); //[>800 T, width, height]
     default02_HorizenORVertical(defaultSizeTWH, boxMain, boxSide); //boxW, boxH get changed here
@@ -22,19 +23,19 @@ let optionChoose = {ObLang:"",Obdiffi:""};
 //default//
 //Action01:Choose Language, difficulty
 if(optionChoose.ObLang==""){
-action01_01_pShowLang();
+action01_01_pShowLang();};
 $(document).on("click",'#sideDifficulty .diff',function(){
     action01_02_pChooseLang($(this));
     action01_03_pRemoveLang();
     action01_04_pShowDif(optionChoose.ObLang);
     action01_05_pShowMobBox();
+    
+}) //from Start, to Difficulty
+$(document).on("click",'#sideRealDifficulty .diff',function(){
+    action02_01_pChooseDiff($(this));
+    action02_02_pRemoveDiff(optionChoose.ObLang);
+    action02_03_pFontSize()
 })
-
-    
-    
-
-
-}
 
 
 //test//
@@ -246,6 +247,7 @@ function action01_04_pShowDif(input_obj){
     }
     let tempC = $('.diffRTitle .t1')
     anyway01_fontSize(tempC)
+    titleSize=tempC.css("fontSize");
     
 }
 function action01_05_pShowMobBox(){
@@ -283,6 +285,42 @@ function action01_05_pShowMobBox(){
     }
    
 
+}
+//action 02
+
+function action02_01_pChooseDiff(input_div){
+    let tempBoxText = input_div.index(); //1 korean 2 english
+    switch (tempBoxText) {
+        case 1 : 
+            optionChoose.Obdiffi = "re";
+            break;
+        case 2 : 
+            optionChoose.Obdiffi = "ha";
+            break;
+    }
+}
+function action02_02_pRemoveDiff(input_obj){
+    $('#sideTextPrompt').addClass("view");
+    $('#sideRealDifficulty').removeClass("view");
+    if(input_obj=="kr"){
+        $.get(`./text/storyKR.txt`,function(ata){
+            let a = ata;
+            $("#sideTextPrompt").append(a)
+        }, 'text');
+        
+    }else{
+        $.get(`./text/storyEN.txt`,function(ata){
+            let a = ata;
+            $("#sideTextPrompt").append(a)
+        }, 'text');
+        
+    }
+   
+}
+function action02_03_pFontSize(){
+    let tempA = parseFloat(titleSize)
+    $('#sideTextPrompt').css('fontSize',titleSize);
+    
 }
 //Function when we START!//
 

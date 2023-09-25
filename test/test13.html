@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @font-face {
+    font-family: 'kppuskum';
+    src: url(./font/kppuskum.ttf) format('truetype');
+}
+
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Phudu&display=swap');
+#storyEN{
+    
+        font-family:'VT323';
+        font-size: larger;
+    }
+</style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
+    integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+</head>
+<body>
+    <div>
+
+<p id="storyEN">
+    
+            <b class="b01">INTRODUCTION</b> 
+    The game, &#60;Numbering Defense&#62; is a volume of holy scripture comparable to the Math. It is a record of God’s dealings with ancient inhabitants of the world and contains the fulness of the everlasting gospel. The game was written by many ancient prophets by the spirit of prophecy and revelation. Their words, written on gold plates, were quoted and abridged by a prophet-historian named Numbers. The record gives an account of two great civilizations. One came from numbers in Integer. and afterward separated into two nations, known as the Negative and the Positive. The other came much earlier when the Lord confounded the tongues at the book of Math. This group is known as the Operations. The crowning event recorded in the &#60;Numbering Defense&#62; is the personal ministry of the Lord Jesus Christ among the Nephites soon after His resurrection. It puts forth the doctrines of the gospel, outlines the plan of salvation, and tells men what they must do to gain peace in this life and eternal salvation in the life to come. In due course the plates were delivered to &#60;Numbering Defense&#62;, who translated them by the gift and power of God. The record is now published in many languages as a new and additional witness that math is the Son of the living God and that all who will come unto Him and obey the laws and ordinances of His gospel may be saved. Concerning this record the Prophet anonymous said: “I told the brethren that the game of him was the most correct of any game on earth, and the keystone of our religion, and a man would get nearer to God by abiding by its precepts, than by any other game.” In addition to them, the Lord provided for eleven others to see the gold plates for themselves and to be special witnesses of the truth and divinity of the &#60;Numbering Defense&#62;. Their written testimonies are included herewith as “The Testimony of Three Witnesses” and “The Testimony of Eight Witnesses.” We invite all men everywhere to play the &#60;Numbering Defense&#62;, to ponder in their hearts the message it contains, and then to ask God, the Eternal Father, in the name of god if the &#60;Numbering Defense&#62; is good.
+</p>
+    </div>
+
+    <script>
+        $.get(`./text/storyEN.txt`,function(ata){
+            let a = ata;
+            $("#test1").append(a)
+        }, 'text')
+        
+
+    </script>
+</body>
+</html>
