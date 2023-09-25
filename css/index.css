@@ -3,6 +3,10 @@
   font-family: "kppuskum";
   src: url(./font/kppuskum.ttf) format("truetype");
 }
+@font-face {
+  font-family: "Super Bubble";
+  src: url(./font/SuperBubble.ttf) format("truetype");
+}
 .t2 {
   font-family: "kppuskum";
 }
@@ -120,7 +124,6 @@
   flex-direction: column;
   justify-content: end;
   align-items: center;
-  cursor: pointer;
 }
 #sideBox #sideRealDifficulty .diff .t2, #sideBox #sideRealDifficulty .diff .t4 {
   display: none;
@@ -137,6 +140,41 @@
 #sideBox #sideRealDifficulty .diff .monsterBox div {
   flex-grow: 0;
   flex-shrink: 0;
+}
+#sideBox #sideTextPrompt {
+  width: 80%;
+  height: 100%;
+  position: absolute;
+  top: 0%;
+  left: 10%;
+  display: none;
+  font-size: 16px;
+  line-height: 6em;
+  word-break: keep-all;
+  word-wrap: break-word;
+  white-space: wrap;
+  text-overflow: ellipsis;
+}
+#sideBox #sideTextPrompt.view {
+  display: block;
+}
+#sideBox #sideTextPrompt .storyEN {
+  font-family: "VT323";
+}
+#sideBox #sideTextPrompt .storyKR {
+  font-family: "kppuskum";
+}
+#sideBox #sideTextPrompt .b00 {
+  font-weight: 600;
+  font-family: "Super Bubble";
+  font-size: calc(1em - 10px);
+}
+#sideBox #sideTextPrompt .b01 {
+  font-weight: 600;
+  font-size: calc(1em + 20px);
+}
+#sideBox #sideTextPrompt .b02 {
+  font-weight: 800;
 }
 
 @keyframes a01_colorshow {
