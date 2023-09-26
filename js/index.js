@@ -1,7 +1,7 @@
 //default//
 const visualWidth= $(document).width(); const visualHeight = $(document).height(); const boxMain = $('#mainBox');
 const boxSide = $('#sideBox');
-const delayMakingBox = 100;
+const delayMakingBox = 100; const slightLineHowMuchWeNeed = 4;
 let MaxEntity = 20; //will adjust
 let verticalOrHorizen = true; // true=horizen, false = vertical
 let stopMakingBox = false; //true = stop make the box
@@ -18,7 +18,7 @@ let titleSize ="";
     let defaultSizeTWH = default01_measuringBox(visualWidth); //[>800 T, width, height]
     default02_HorizenORVertical(defaultSizeTWH, boxMain, boxSide); //boxW, boxH get changed here
     boxZoneValueArray = default03_divideThearea();
-    default04_makeMonsterSpawnArea(); //MaxEntity will fixed here too, and if over 120, it will fixed as 120
+    //default04 will be activated when we choose diff
     default05_howManyBoxesWeWillDeal();
 //default//
 //Action01:Choose Language, difficulty
@@ -35,8 +35,18 @@ $(document).on("click",'#sideRealDifficulty .diff',function(){
     action02_01_pChooseDiff($(this));
     action02_02_pRemoveDiff(optionChoose.ObLang);
     action02_03_pFontSize()
+    default04_makeMonsterSpawnArea(); //MaxEntity will fixed here too, and if over 120, it will fixed as 120
+    action02_04_pPrompt();
+}) //from Difficulty, to main Start
+$(document).on("click","#sideTextPrompt p",function(){
+    action02_06_pSkip();
 })
-
+$(document).on("click","#sideStart",function(){
+    action03_01_lStart();
+})
+$(document).on("click","#logoBoxBgUnder span",function(){
+    action04_01_FinallyWeStart($());
+})
 
 //test//
     console.log(boxLocationWeWilluse)
@@ -286,21 +296,23 @@ function action01_05_pShowMobBox(){
    
 
 }
-//action 02
 
+//action 02
 function action02_01_pChooseDiff(input_div){
     let tempBoxText = input_div.index(); //1 korean 2 english
     switch (tempBoxText) {
         case 1 : 
             optionChoose.Obdiffi = "re";
+            difficultyReHa = true;
             break;
         case 2 : 
             optionChoose.Obdiffi = "ha";
+            difficultyReHa = false;
             break;
     }
 }
 function action02_02_pRemoveDiff(input_obj){
-    $('#sideTextPrompt').addClass("view");
+    $('#sideTeleprompterBox').addClass("view");
     $('#sideRealDifficulty').removeClass("view");
     if(input_obj=="kr"){
         $.get(`./text/storyKR.txt`,function(ata){
@@ -318,9 +330,207 @@ function action02_02_pRemoveDiff(input_obj){
    
 }
 function action02_03_pFontSize(){
-    let tempA = parseFloat(titleSize)
+    
     $('#sideTextPrompt').css('fontSize',titleSize);
     
+}
+function action02_04_pPrompt(){
+    
+    let tempInterval = setInterval(()=>{
+        $('#sideTextPrompt').animate({
+            top: "-=50"
+        }, 0)
+        if (parseFloat($('#sideTextPrompt').css("top"))*-1>=($('#sideTextPrompt').height())){
+            clearInterval(tempInterval);
+            action02_05_pShowStart();
+            
+        }
+    },600);
+
+}
+function action02_05_pShowStart(){
+    $('#sideStart').addClass("view");
+    if(optionChoose.ObLang=="kr"){
+        $('#sideStart .t2').addClass("view");
+        $('#sideStart').css('fontSize',titleSize);
+    }else{
+        $('#sideStart .t4').addClass("view");
+        $('#sideStart').css('fontSize',titleSize);
+    }
+}
+function action02_06_pSkip(){
+    let tempA = ($('#sideTextPrompt').height())*-1 +"px"
+    $('#sideTextPrompt').css("top",tempA)
+}
+//action 03
+function action03_01_lStart(){
+    $('#sideTeleprompterBox').removeClass("view");
+    $('#logoBox').addClass("view");
+    if(optionChoose.ObLang=="kr"){
+        let tempA = slightLineHowMuchWeNeed *2 +1;
+        for(let i=0; i< tempA*2; i++){
+            $('#logoBox').append(`<div class='sideSlight slight${i}'></div>`);
+            console.log("boxx")
+        };
+
+        let tempB = $('.sideSlight').height(); //get each line's height
+        let tempC = $('#logoBox').width(); // get the box will contain slight
+        let tempBA = tempC / (slightLineHowMuchWeNeed *2); // get each location where slight will be there
+        let tempArray = [];//for Last array
+        let tempArray2 = []; // for puting each location;
+            for(let i=0; i < (slightLineHowMuchWeNeed *2)+1; i++){
+                tempArray2.push(tempBA*i);
+            }
+        let tempD_Degree = 40;
+        let tempD_eachTimeDegree = (tempD_Degree *2) / (slightLineHowMuchWeNeed * 2);
+        let tempD_lastValue = (-1 * tempD_Degree) - tempD_eachTimeDegree;
+        let tempD_tempCount = 0;
+            for(let u = tempD_Degree; u>tempD_lastValue; u -= tempD_eachTimeDegree){
+                let tempArray3 = [];
+                if(u>0){
+                    let tempE = u * (Math.PI / 180); // get real deg
+                    tempE = Math.tan(tempE) // get height/bottom
+                    tempE = (tempE).toFixed(2) // make number light
+                    tempE = tempB * tempE; //get height
+                    tempE = tempE / 2 // it's height/2 but we will deal this as width
+                    tempE = (tempArray2[tempD_tempCount] +tempE);
+                    tempE += "px";
+
+                    tempArray3.push(tempE);
+                    tempArray3.push(`skewX(${u}deg)`)
+
+                    tempD_tempCount++;
+                }else if(tempD_tempCount==slightLineHowMuchWeNeed){
+                    // let tempE = u * (Math.PI / 180);
+                    // tempE = Math.tan(tempE)
+                    // tempE = (tempE).toFixed(2)
+                    // tempE = tempB * tempE;
+                    // tempE = tempE / 2
+                    // let tempE2 = $(`slight${tempD_tempCount}`).width();
+                    // tempE = (tempArray2[tempD_tempCount] -tempE2/2);
+                    let tempE2 = $(`.slight${tempD_tempCount}`).width();
+                    console.log(tempE2+"E2")
+                    let tempE = tempC/2 - tempE2/2
+                    console.log(tempE+"E")
+                    tempE += "px";
+                    tempArray3.push(tempE);
+                    tempArray3.push(`skewX(${u}deg)`)
+
+                    tempD_tempCount++;
+                }else{
+                    let tempE = tempB * (Math.tan((-1 * u) * Math.PI / 180)).toFixed(2) / 2
+                    tempE = tempArray2[(slightLineHowMuchWeNeed*2)-tempD_tempCount] + tempE + "px"
+                    
+                    tempArray3.push(tempE);
+                    tempArray3.push(`skewX(${u}deg)`)
+                
+                    tempD_tempCount++;
+                }
+                tempArray.push(tempArray3)
+            }
+            console.log(tempArray)
+            for(let p=0; p <=(slightLineHowMuchWeNeed*4)+1;p++){
+                if(p>=0&&p<=2*slightLineHowMuchWeNeed){ //top
+                    if(p<slightLineHowMuchWeNeed){ //left
+                        $(`.slight${p}`).css({
+                        left:tempArray[p][0],
+                        transform:tempArray[p][1],
+                        top:0
+                    })
+                    }else if(p==slightLineHowMuchWeNeed){
+                        $(`.slight${p}`).css({
+                        left:tempArray[p][0],
+                        transform:tempArray[p][1],
+                        top:0
+                    })
+                    }else{ //right
+                        $(`.slight${p}`).css({
+                        right:tempArray[p][0],
+                        transform:tempArray[p][1],
+                        top:0
+                    })
+                    }
+                
+                    
+                }else{ //bottom
+                    if(p<(slightLineHowMuchWeNeed*3)+1){ //left
+                        $(`.slight${p}`).css({
+                        left:tempArray[(4*slightLineHowMuchWeNeed)+1-p][0],
+                        transform:`${tempArray[(4*slightLineHowMuchWeNeed)+1-p][1]} rotate(180deg)`,
+                        bottom:0
+                        
+                    })
+                    }else if(p==(slightLineHowMuchWeNeed*3+1)){
+                        $(`.slight${p}`).css({
+                        left:tempArray[(4*slightLineHowMuchWeNeed)+1-p][0],
+                        transform:`${tempArray[(4*slightLineHowMuchWeNeed)+1-p][1]} rotate(180deg)`,
+                        bottom:0
+                    })
+                    }else{ //right
+                        $(`.slight${p}`).css({
+                        right:tempArray[(4*slightLineHowMuchWeNeed)+1-p][0],
+                        transform:`${tempArray[(4*slightLineHowMuchWeNeed)+1-p][1]} rotate(180deg)`,
+                        bottom:0
+                    })
+                    }
+                }
+                
+
+            }
+        let tempK = 0;
+        let tempK1 = setInterval(()=>{
+            $(`.slight${tempK}`).css({
+                    
+                animation: 'b01_blight 2s linear infinite',
+                
+                })
+                tempK++;
+                if(tempK == slightLineHowMuchWeNeed*4){
+                    clearInterval(tempK1)
+                }
+
+        },500)
+        
+    }
+    action03_02_lBg()   
+}
+function action03_02_lBg(){
+    $('#logoBoxBgUnder').addClass("view");
+    if(optionChoose.ObLang=="kr"){
+    $('#logoBoxBg').css({
+        backgroundImage : `url(./css/images/DefenseTitleKr.png)`
+    })
+    $('#logoBoxBgUnder .t2').addClass("view");
+    $('#logoBoxBgUnder .t2').css('fontSize',titleSize);
+
+    }else{
+        $('#logoBoxBg').css({
+            backgroundImage : `url(./css/images/DefenseTitle.png)`,
+            filter: 'drop-shadow(0 0 0.75rem #280000)'
+        })
+    $('#logoBoxBgUnder .t4').addClass("view");
+    $('#logoBoxBgUnder .t4').css('fontSize',titleSize);
+    }
+}
+
+//action 04
+function action04_01_FinallyWeStart(){
+    $('#sideBox').removeClass("view");
+    $('#mainBox #backgroundBox').css({
+        width : '105%',
+        height : '105%',
+        position : 'absolute',
+        top : '-5%',
+        left : '-2.5%',
+        backgroundImage : `url(./css/images/thisisit.png)`,
+        zIndex : '-1',
+        backgroundSize : '100% 100%',
+        borderRadius : '15px',
+        backgroundColor : '#7d7d7d',
+        backgroundPosition : 'center',
+        boxShadow : '0px 0px 10px 10px #7d7d7d'
+
+    })
 }
 //Function when we START!//
 

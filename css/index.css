@@ -109,10 +109,12 @@
   display: block;
   font-size: 10px;
 }
-#sideBox #sideRealDifficulty .diffRTitle .t2, #sideBox #sideRealDifficulty .diffRTitle .t4 {
+#sideBox #sideRealDifficulty .diffRTitle .t2,
+#sideBox #sideRealDifficulty .diffRTitle .t4 {
   display: none;
 }
-#sideBox #sideRealDifficulty .diffRTitle .t2.view, #sideBox #sideRealDifficulty .diffRTitle .t4.view {
+#sideBox #sideRealDifficulty .diffRTitle .t2.view,
+#sideBox #sideRealDifficulty .diffRTitle .t4.view {
   display: inline-block;
 }
 #sideBox #sideRealDifficulty .diff {
@@ -125,11 +127,13 @@
   justify-content: end;
   align-items: center;
 }
-#sideBox #sideRealDifficulty .diff .t2, #sideBox #sideRealDifficulty .diff .t4 {
+#sideBox #sideRealDifficulty .diff .t2,
+#sideBox #sideRealDifficulty .diff .t4 {
   display: none;
   transform: scale(50%);
 }
-#sideBox #sideRealDifficulty .diff .t2.view, #sideBox #sideRealDifficulty .diff .t4.view {
+#sideBox #sideRealDifficulty .diff .t2.view,
+#sideBox #sideRealDifficulty .diff .t4.view {
   display: inline-block;
 }
 #sideBox #sideRealDifficulty .diff .monsterBox {
@@ -141,40 +145,125 @@
   flex-grow: 0;
   flex-shrink: 0;
 }
-#sideBox #sideTextPrompt {
+#sideBox #sideTeleprompterBox {
   width: 80%;
   height: 100%;
   position: absolute;
   top: 0%;
   left: 10%;
   display: none;
-  font-size: 16px;
-  line-height: 6em;
-  word-break: keep-all;
-  word-wrap: break-word;
-  white-space: wrap;
-  text-overflow: ellipsis;
+  overflow: hidden;
 }
-#sideBox #sideTextPrompt.view {
+#sideBox #sideTeleprompterBox.view {
   display: block;
 }
-#sideBox #sideTextPrompt .storyEN {
+#sideBox #sideTeleprompterBox #sideTextPrompt {
+  width: 80%;
+  position: absolute;
+  top: 0px;
+  left: 10%;
+  font-size: 16px;
+  line-height: 4em;
+  word-break: keep-all;
+  word-wrap: break-word;
+  white-space: normal;
+  text-overflow: ellipsis;
+  transition: top 0.6s;
+  text-align: center;
+}
+#sideBox #sideTeleprompterBox #sideTextPrompt .storyEN {
   font-family: "VT323";
 }
-#sideBox #sideTextPrompt .storyKR {
+#sideBox #sideTeleprompterBox #sideTextPrompt .storyKR {
   font-family: "kppuskum";
 }
-#sideBox #sideTextPrompt .b00 {
+#sideBox #sideTeleprompterBox #sideTextPrompt .b00 {
   font-weight: 600;
   font-family: "Super Bubble";
-  font-size: calc(1em - 10px);
+  font-size: calc(1em - 15px);
 }
-#sideBox #sideTextPrompt .b01 {
+#sideBox #sideTeleprompterBox #sideTextPrompt .b01 {
   font-weight: 600;
   font-size: calc(1em + 20px);
 }
-#sideBox #sideTextPrompt .b02 {
+#sideBox #sideTeleprompterBox #sideTextPrompt .b02 {
   font-weight: 800;
+}
+#sideBox #sideTeleprompterBox #sideStart {
+  display: none;
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  bottom: 20%;
+  left: 25%;
+  justify-content: center;
+  align-items: end;
+}
+#sideBox #sideTeleprompterBox #sideStart span {
+  display: none;
+}
+#sideBox #sideTeleprompterBox #sideStart span.view {
+  display: inline-block;
+}
+#sideBox #sideTeleprompterBox #sideStart.view {
+  display: flex;
+}
+
+#logoBox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+#logoBox.view {
+  display: block;
+}
+#logoBox .sideSlight {
+  position: absolute;
+  width: 5%;
+  height: 35%;
+  opacity: 1;
+}
+#logoBox .sideSlight:nth-of-type(odd) {
+  background-color: #22ec76;
+}
+#logoBox .sideSlight:nth-of-type(even) {
+  background-color: #ff17ff;
+}
+#logoBox #logoBoxBg {
+  width: 60%;
+  height: 60%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  top: 15%;
+  left: 18%;
+  z-index: 500;
+}
+#logoBox #logoBoxBg #logoBoxBgUnder {
+  position: absolute;
+  width: 100%;
+  height: 15%;
+  bottom: -15%;
+  display: none;
+  justify-content: center;
+  align-items: end;
+}
+#logoBox #logoBoxBg #logoBoxBgUnder.view {
+  display: flex;
+}
+#logoBox #logoBoxBg #logoBoxBgUnder span {
+  display: none;
+}
+#logoBox #logoBoxBg #logoBoxBgUnder .t2.view {
+  display: inline-block;
+  animation: b02_FontColor 2s infinite linear;
+}
+#logoBox #logoBoxBg #logoBoxBgUnder .t4.view {
+  display: inline-block;
+  animation: a03_beating 3s infinite linear;
 }
 
 @keyframes a01_colorshow {
@@ -205,5 +294,45 @@
   }
   100% {
     transform: scaleX(100%) scaleY(100%);
+  }
+}
+@keyframes b01_blight {
+  0% {
+    filter: brightness(100%);
+  }
+  40% {
+    filter: brightness(30%);
+  }
+  80% {
+    filter: brightness(120%);
+  }
+  100% {
+    filter: brightness(100%);
+  }
+}
+@keyframes b02_FontColor {
+  0% {
+    color: #000000;
+    filter: drop-shadow(0 0 0.75rem #fff);
+  }
+  20% {
+    color: #ff0000;
+    filter: drop-shadow(0 0 0.75rem #ff00c8);
+  }
+  40% {
+    color: #002aff;
+    filter: drop-shadow(0 0 0.75rem #05ff1e);
+  }
+  60% {
+    color: #f2ff00;
+    filter: drop-shadow(0 0 0.75rem #280000);
+  }
+  80% {
+    color: #96ff27;
+    filter: drop-shadow(0 0 0.75rem #c71717);
+  }
+  100% {
+    color: #ffffff;
+    filter: drop-shadow(0 0 0.75rem #eee);
   }
 }/*# sourceMappingURL=index.css.map */

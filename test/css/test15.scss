@@ -1,0 +1,19 @@
+
+#pormptBox{
+    width: 800px;
+    height: 400px;
+    margin: 80px auto;
+    background-color: aliceblue;
+    position: relative;
+    overflow: hidden;
+    #inbox{
+            width: 100%;
+            position: absolute;
+            left: 0%;
+            top: 0px;
+            font-size: 16px;
+            line-height: 6em;
+            white-space:normal;
+            transition: top 1.2s;
+    }
+}
